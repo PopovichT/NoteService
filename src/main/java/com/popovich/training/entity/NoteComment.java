@@ -5,13 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-@Entity
 @Data
+@Entity
+@AllArgsConstructor
 @NoArgsConstructor
-public class Note {
+public class NoteComment {
 
     @Id
     @GeneratedValue
@@ -23,11 +22,14 @@ public class Note {
     @Column(name = "text")
     private String text;
 
-    @OneToMany
-    private List<NoteComment> comments = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "note_id")
+    private Note note;
 
-    public Note (String name, String text) {
+    public NoteComment (String name, String text, Note note){
         this.name = name;
         this.text = text;
+        this.note = note;
     }
+
 }
